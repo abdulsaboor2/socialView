@@ -1,4 +1,0 @@
-C:/Users/zains/SocialView/android/app/.cxx/RelWithDebInfo/4n503q6q/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir
-C:/Users/zains/SocialView/android/app/.cxx/RelWithDebInfo/4n503q6q/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir
-C:/Users/zains/SocialView/android/app/.cxx/RelWithDebInfo/4n503q6q/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/edit_cache.dir
-C:/Users/zains/SocialView/android/app/.cxx/RelWithDebInfo/4n503q6q/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/rebuild_cache.dir
