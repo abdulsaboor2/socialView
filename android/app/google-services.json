@@ -1,0 +1,87 @@
+{
+  "project_info": {
+    "project_number": "161426501800",
+    "project_id": "socialview-93df7",
+    "storage_bucket": "socialview-93df7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161426501800:android:34dca3fc98007f3a46529d",
+        "android_client_info": {
+          "package_name": "com.socialview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161426501800-3vhrsa6iokpan8vapivo8k4r85vc9ice.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.socialview",
+            "certificate_hash": "5a26a8a69c34105c992cf918bbf52aa762e65871"
+          }
+        },
+        {
+          "client_id": "161426501800-8sqlnbp0n4pq4tvphpn02q1h3mtv5orm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.socialview",
+            "certificate_hash": "2ec17938ef540386cdb8a3e6146c9f10571210f6"
+          }
+        },
+        {
+          "client_id": "161426501800-cim3oid5onr8al4ig506n52lu02tcgvm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.socialview",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "161426501800-fi7gia6b3c0rq38lfucf4n07ik0b326e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.socialview",
+            "certificate_hash": "72c42050b9fedfa518f18543527760c3bfa7979a"
+          }
+        },
+        {
+          "client_id": "161426501800-mjo2bg7p2nbn8kdb2s9eoih3kpjpgg2t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.socialview",
+            "certificate_hash": "857ea7ebb1560bfde20b2c22d9fb9fa9b5d93b7d"
+          }
+        },
+        {
+          "client_id": "161426501800-qhrm0q47cvttrirpoe97jogbqohn0e6r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.socialview",
+            "certificate_hash": "6fbf8f90e52b75aee2ec71e535398530e08e148e"
+          }
+        },
+        {
+          "client_id": "161426501800-0je5ib6ufsbr4meuo18psq4aaivvur7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2Bmj3YWKhXZGQ-sLBQk5N9aTryCyj2N0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161426501800-0je5ib6ufsbr4meuo18psq4aaivvur7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

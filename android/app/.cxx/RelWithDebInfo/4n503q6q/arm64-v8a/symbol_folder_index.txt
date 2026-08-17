@@ -1,0 +1,1 @@
+C:\Users\zains\SocialView\android\app\build\intermediates\cxx\RelWithDebInfo\4n503q6q\obj\arm64-v8a

@@ -1,0 +1,262 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------------------------------------------------------
+    // USERS
+    // Readable by any signed-in user (required for chat headers, search,
+    // typing/online status — this is intentionally NOT gated by
+    // profilePrivacy; see FIRESTORE_PRIVACY_RULES.md for why). Writable
+    // only by the account owner.
+    // ---------------------------------------------------------------
+    match /Users/{uid} {
+      allow read: if request.auth != null;
+      allow create, update: if request.auth != null && request.auth.uid == uid;
+      allow delete: if false; // add explicit account-deletion flow later if needed
+    }
+
+    // ---------------------------------------------------------------
+    // POSTS
+    // Visible to anyone if the author is public, or to the author always.
+    // See FIRESTORE_PRIVACY_RULES.md — your feed query MUST filter on
+    // authorPrivacy == 'public' (plus a separate query for your own
+    // posts) or this list query will be rejected outright.
+    // ---------------------------------------------------------------
+    match /Posts/{postId} {
+      allow read: if request.auth != null &&
+        (resource.data.authorPrivacy == 'public' ||
+         resource.data.uid == request.auth.uid);
+
+      allow create: if request.auth != null &&
+        request.resource.data.uid == request.auth.uid &&
+        request.resource.data.authorPrivacy in ['public', 'private'];
+
+      // FIX: this was owner-only for update too — but liking or
+      // commenting on someone ELSE's post writes to that post's `likes`/
+      // `comments` counters (see toggleLikeShared in postService.js, and
+      // handleAddComment/handleDeleteComment in IndividualPostScreen.js).
+      // Owner-only would have silently denied every like and comment on
+      // any post that wasn't your own. Same pattern as Stories' `views`
+      // field below: the owner can change anything, anyone else signed
+      // in can only touch `likes`/`comments`, never the post's content.
+      allow update: if request.auth != null &&
+        (resource.data.uid == request.auth.uid ||
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'comments']));
+
+      allow delete: if request.auth != null &&
+        resource.data.uid == request.auth.uid;
+    }
+
+    // ---------------------------------------------------------------
+    // LIKES  (Likes/{postId}_{userId})
+    // This collection had NO rule at all before — it would have fallen
+    // through to the deny-all catch-all at the bottom, breaking every
+    // like/unlike and the "Liked by" list entirely.
+    //
+    // Read is open to any signed-in user (matches the same
+    // known-limitation reasoning as Comments above — a like isn't
+    // gated by the parent post's privacy yet; send me postService.js
+    // and LikedByScreen's query if you want that closed precisely).
+    // Write is restricted to your OWN like doc only — you can create or
+    // delete a like where you are the userId, never on someone else's
+    // behalf.
+    // ---------------------------------------------------------------
+    match /Likes/{likeId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null &&
+        request.resource.data.userId == request.auth.uid;
+      allow update: if false; // a like is create/delete only, never edited
+      // FIX: was owner-of-the-like-only. PostMoreMenu.js's cascade delete
+      // batch-deletes every like on a post when its author deletes the
+      // post — most of those likes belong to OTHER people, and Firestore
+      // batches are all-or-nothing, so a single denied delete in that
+      // batch was failing post deletion entirely for any post with
+      // engagement from anyone but its own author. The get() lookup
+      // confirms the requester owns the POST the like belongs to.
+      allow delete: if request.auth != null &&
+        (resource.data.userId == request.auth.uid ||
+         get(/databases/$(database)/documents/Posts/$(resource.data.postId)).data.uid == request.auth.uid);
+    }
+
+    // ---------------------------------------------------------------
+    // COMMENTS
+    // NOTE / KNOWN LIMITATION: comments are readable by any signed-in
+    // user regardless of whether the post they belong to is private.
+    // Properly inheriting privacy from the parent post needs either a
+    // get() lookup per comment (extra read cost, and list-query
+    // behavior with get() needs testing on your exact query shape) or
+    // denormalizing authorPrivacy onto each comment the same way it's
+    // denormalized onto Posts. Flagging this rather than guessing —
+    // send me your Comments read query (probably in
+    // IndividualPostScreen/PostDetails) and I'll close this gap properly.
+    // ---------------------------------------------------------------
+    match /Comments/{commentId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null &&
+        request.resource.data.userId == request.auth.uid;
+      allow update: if request.auth != null &&
+        resource.data.userId == request.auth.uid;
+      // FIX: same cascade-delete problem as Likes above — deleting a post
+      // with comments from other people was failing the whole batch,
+      // since only a comment's own author could delete it.
+      allow delete: if request.auth != null &&
+        (resource.data.userId == request.auth.uid ||
+         get(/databases/$(database)/documents/Posts/$(resource.data.postId)).data.uid == request.auth.uid);
+    }
+
+    // ---------------------------------------------------------------
+    // REPORTS  (Reports/{reportId})
+    // Had NO rule at all — PostMoreMenu.js's handleReport writes here
+    // and was falling through to the deny-all catch-all. Write-only from
+    // the client by design: anyone signed in can file a report naming
+    // themselves as the reporter, nobody can read, edit, or delete
+    // reports via the client — reviewing them is an admin/backend
+    // concern (Firebase console or the Admin SDK), not something the
+    // app itself should expose.
+    // ---------------------------------------------------------------
+    match /Reports/{reportId} {
+      allow create: if request.auth != null &&
+        request.resource.data.reporterId == request.auth.uid;
+      allow read, update, delete: if false;
+    }
+
+    // ---------------------------------------------------------------
+    // CHATS  (Chats/{ownerUid}/{peerUid}/{messageId})
+    // Your onSend() in ChatScreen.js writes into BOTH participants'
+    // mirrored subcollections in one batch — the sender writes to their
+    // own copy AND the recipient's copy. So "only the doc owner can
+    // write" would actually break sending messages. The correct rule is:
+    // either participant (owner uid OR peer uid in the path) can create/
+    // update a message doc, but you can only READ your own mirror, and
+    // only delete from your own mirror (matches your
+    // "won't delete it for them" comment in handleDeleteChat).
+    // ---------------------------------------------------------------
+    match /Chats/{uid}/{peerId}/{messageId} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null &&
+        (request.auth.uid == uid || request.auth.uid == peerId);
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // ---------------------------------------------------------------
+    // LIST OF COLLECTION  (ListOfCollection/{ownerUid}/Chat/{peerUid})
+    // Same fan-out pattern as Chats above — chatMeta is written into
+    // both participants' chat-list entries by whichever one sent the
+    // last message.
+    // ---------------------------------------------------------------
+    match /ListOfCollection/{uid}/Chat/{peerId} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null &&
+        (request.auth.uid == uid || request.auth.uid == peerId);
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // ---------------------------------------------------------------
+    // STORIES
+    // Same public/private pattern as Posts. NOTE: I haven't seen
+    // AddStoryScreen.js (where stories are created) or StoriesTabScreen.js
+    // (the stories feed query) — this rule assumes both will be updated
+    // the same way Posts were: writing an explicit authorPrivacy field on
+    // create, and filtering the feed query with
+    // .where('authorPrivacy', '==', 'public') the same way the Posts feed
+    // needed to. Send me those two files to close this out precisely.
+    //
+    // The `update` rule is deliberately split in two: the story OWNER can
+    // change anything, but any other signed-in user (i.e. a viewer, via
+    // the markSeen() transaction in StoryScreen.jsx) can ONLY touch the
+    // `views` counter — never the story's content.
+    // ---------------------------------------------------------------
+    match /Stories/{storyId} {
+      allow read: if request.auth != null &&
+        (resource.data.authorPrivacy == 'public' ||
+         resource.data.userId == request.auth.uid);
+
+      allow create: if request.auth != null &&
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.authorPrivacy in ['public', 'private'];
+
+      allow update: if request.auth != null &&
+        (resource.data.userId == request.auth.uid ||
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views']));
+
+      allow delete: if request.auth != null &&
+        resource.data.userId == request.auth.uid;
+    }
+
+    // ---------------------------------------------------------------
+    // STORY VIEWS  (StoryViews/{storyId}_{viewerUid})
+    // `ownerId` is a NEW field this rule requires — see the StoryScreen.jsx
+    // patch alongside this file, which stamps it onto each view doc and
+    // adds a matching `.where('ownerId', ...)` filter to both queries that
+    // read this collection. Without that query-side change, Firestore
+    // rejects those queries outright (rules can't protect a list query
+    // unless the query's own filters prove the rule condition — see
+    // https://firebase.google.com/docs/firestore/security/rules-query).
+    // ---------------------------------------------------------------
+    match /StoryViews/{viewId} {
+      allow create: if request.auth != null &&
+        request.resource.data.viewerUid == request.auth.uid &&
+        request.resource.data.ownerId is string;
+
+      allow read: if request.auth != null &&
+        (resource.data.viewerUid == request.auth.uid ||
+         resource.data.ownerId == request.auth.uid);
+
+      allow update: if false;
+
+      allow delete: if request.auth != null &&
+        (resource.data.viewerUid == request.auth.uid ||
+         resource.data.ownerId == request.auth.uid);
+    }
+
+    // ---------------------------------------------------------------
+    // CALLS  (calls/{uid})
+    // Confirmed shape from CallWatcher.jsx, CallingScreen.jsx,
+    // ForVideoCall.js, IncomingCallScreen.jsx, and ChatHeader.jsx's
+    // startOrResumeCall: each participant appears to get their OWN
+    // calls/{uid} document (CallWatcher reads calls/{receiverUid},
+    // ForVideoCall reads calls/{myUid}), fanned out by whoever starts the
+    // call — the same pattern as Chats/ListOfCollection. Since there's
+    // only one uid in the path here (unlike Chats' {uid}/{peerId}), the
+    // write check instead confirms the WRITER is actually a participant
+    // named in the document's own callerUid/receiverUid fields.
+    //
+    // NOTE: I don't have callService.js, so this is inferred from field
+    // usage across every file that reads from this collection, not from
+    // seeing the actual write code. Send me that file if you want this
+    // tightened with certainty rather than best-effort.
+    // ---------------------------------------------------------------
+    match /calls/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null &&
+        (request.resource.data.callerUid == request.auth.uid ||
+         request.resource.data.receiverUid == request.auth.uid);
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // ---------------------------------------------------------------
+    // CALL HISTORY  (callHistory/{uid}/items/{itemId})
+    // Same fan-out reasoning as calls above — CallHistory.js reads from
+    // callHistory/{me.uid}/items and each item carries callerUid/
+    // receiverUid fields used to resolve "who was the other person".
+    // ---------------------------------------------------------------
+    match /callHistory/{uid}/items/{itemId} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null &&
+        (request.resource.data.callerUid == request.auth.uid ||
+         request.resource.data.receiverUid == request.auth.uid);
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // ---------------------------------------------------------------
+    // EVERYTHING ELSE
+    // Denying by default is the safe choice — an accidentally-too-strict
+    // rule fails loudly (your app breaks and you notice immediately);
+    // an accidentally-too-open rule fails silently (a stranger reads
+    // your users' data and you may never find out).
+    // ---------------------------------------------------------------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

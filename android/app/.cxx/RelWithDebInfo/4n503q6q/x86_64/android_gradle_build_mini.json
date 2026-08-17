@@ -1,0 +1,151 @@
+{
+  "buildFiles": [
+    "C:\\Users\\zains\\SocialView\\node_modules\\@react-native-async-storage\\async-storage\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\@react-native-clipboard\\clipboard\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\@react-native-google-signin\\google-signin\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-agora\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-bootsplash\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-gesture-handler\\android\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-get-random-values\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-image-picker\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-keyboard-controller\\android\\src\\main\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-reanimated\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-safe-area-context\\android\\src\\main\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-screens\\android\\src\\main\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-share\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-vector-icons\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-webview\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native-worklets\\android\\build\\generated\\source\\codegen\\jni\\CMakeLists.txt",
+    "C:\\Users\\zains\\SocialView\\node_modules\\react-native\\ReactAndroid\\cmake-utils\\default-app-setup\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\zains\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "C:\\Users\\zains\\SocialView\\android\\app\\.cxx\\RelWithDebInfo\\4n503q6q\\x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\zains\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "C:\\Users\\zains\\SocialView\\android\\app\\.cxx\\RelWithDebInfo\\4n503q6q\\x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "react_codegen_RNVectorIconsSpec::@479809fae146501fd34d": {
+      "artifactName": "react_codegen_RNVectorIconsSpec",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    },
+    "react_codegen_safeareacontext::@7984cd80db47aa7b952a": {
+      "artifactName": "react_codegen_safeareacontext",
+      "abi": "x86_64",
+      "output": "C:\\Users\\zains\\SocialView\\android\\app\\build\\intermediates\\cxx\\RelWithDebInfo\\4n503q6q\\obj\\x86_64\\libreact_codegen_safeareacontext.so",
+      "runtimeFiles": [
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\d6d633a9edf24ef67434af76f13f05f7\\workspace\\transformed\\fbjni-0.7.0\\prefab\\modules\\fbjni\\libs\\android.x86_64\\libfbjni.so",
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\c100474a0f32297952e6fa002753a4f3\\workspace\\transformed\\react-android-0.86.0-release\\prefab\\modules\\jsi\\libs\\android.x86_64\\libjsi.so",
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\c100474a0f32297952e6fa002753a4f3\\workspace\\transformed\\react-android-0.86.0-release\\prefab\\modules\\reactnative\\libs\\android.x86_64\\libreactnative.so"
+      ]
+    },
+    "react_codegen_rngesturehandler_codegen::@39f233abcd2c728bc6ec": {
+      "artifactName": "react_codegen_rngesturehandler_codegen",
+      "abi": "x86_64",
+      "output": "C:\\Users\\zains\\SocialView\\android\\app\\build\\intermediates\\cxx\\RelWithDebInfo\\4n503q6q\\obj\\x86_64\\libreact_codegen_rngesturehandler_codegen.so",
+      "runtimeFiles": [
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\d6d633a9edf24ef67434af76f13f05f7\\workspace\\transformed\\fbjni-0.7.0\\prefab\\modules\\fbjni\\libs\\android.x86_64\\libfbjni.so",
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\c100474a0f32297952e6fa002753a4f3\\workspace\\transformed\\react-android-0.86.0-release\\prefab\\modules\\jsi\\libs\\android.x86_64\\libjsi.so",
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\c100474a0f32297952e6fa002753a4f3\\workspace\\transformed\\react-android-0.86.0-release\\prefab\\modules\\reactnative\\libs\\android.x86_64\\libreactnative.so"
+      ]
+    },
+    "react_codegen_RNCWebViewSpec::@eb48929f9f7453740a6c": {
+      "artifactName": "react_codegen_RNCWebViewSpec",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    },
+    "appmodules::@6890427a1f51a3e7e1df": {
+      "artifactName": "appmodules",
+      "abi": "x86_64",
+      "output": "C:\\Users\\zains\\SocialView\\android\\app\\build\\intermediates\\cxx\\RelWithDebInfo\\4n503q6q\\obj\\x86_64\\libappmodules.so",
+      "runtimeFiles": [
+        "C:\\Users\\zains\\SocialView\\android\\app\\build\\intermediates\\cxx\\RelWithDebInfo\\4n503q6q\\obj\\x86_64\\libreact_codegen_rngesturehandler_codegen.so",
+        "C:\\Users\\zains\\SocialView\\android\\app\\build\\intermediates\\cxx\\RelWithDebInfo\\4n503q6q\\obj\\x86_64\\libreact_codegen_RNKC.so",
+        "C:\\Users\\zains\\SocialView\\android\\app\\build\\intermediates\\cxx\\RelWithDebInfo\\4n503q6q\\obj\\x86_64\\libreact_codegen_safeareacontext.so",
+        "C:\\Users\\zains\\SocialView\\android\\app\\build\\intermediates\\cxx\\RelWithDebInfo\\4n503q6q\\obj\\x86_64\\libreact_codegen_rnscreens.so",
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\d6d633a9edf24ef67434af76f13f05f7\\workspace\\transformed\\fbjni-0.7.0\\prefab\\modules\\fbjni\\libs\\android.x86_64\\libfbjni.so",
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\c100474a0f32297952e6fa002753a4f3\\workspace\\transformed\\react-android-0.86.0-release\\prefab\\modules\\jsi\\libs\\android.x86_64\\libjsi.so",
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\c100474a0f32297952e6fa002753a4f3\\workspace\\transformed\\react-android-0.86.0-release\\prefab\\modules\\reactnative\\libs\\android.x86_64\\libreactnative.so"
+      ]
+    },
+    "react_codegen_RNGetRandomValuesSpec::@6e1160200c59ddcfca1e": {
+      "artifactName": "react_codegen_RNGetRandomValuesSpec",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    },
+    "react_codegen_RNBootSplashSpec::@05d5bd8b08339ce1ebaa": {
+      "artifactName": "react_codegen_RNBootSplashSpec",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    },
+    "react_codegen_rnworklets::@68f58d84d4754f193387": {
+      "artifactName": "react_codegen_rnworklets",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    },
+    "react_codegen_RNGoogleSignInCGen::@337b7b353bd94a4215c0": {
+      "artifactName": "react_codegen_RNGoogleSignInCGen",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    },
+    "react_codegen_rnclipboard::@6385240493dfcaf22ab7": {
+      "artifactName": "react_codegen_rnclipboard",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    },
+    "react_codegen_AgoraRtcNgSpec::@b3e2fa00649b55f06a11": {
+      "artifactName": "react_codegen_AgoraRtcNgSpec",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    },
+    "react_codegen_rnreanimated::@8afabad14bfffa3f8b9a": {
+      "artifactName": "react_codegen_rnreanimated",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    },
+    "react_codegen_RNImagePickerSpec::@f66ee9a2efecfb28bee4": {
+      "artifactName": "react_codegen_RNImagePickerSpec",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    },
+    "react_codegen_rnscreens::@25bcbd507e98d3a854ad": {
+      "artifactName": "react_codegen_rnscreens",
+      "abi": "x86_64",
+      "output": "C:\\Users\\zains\\SocialView\\android\\app\\build\\intermediates\\cxx\\RelWithDebInfo\\4n503q6q\\obj\\x86_64\\libreact_codegen_rnscreens.so",
+      "runtimeFiles": [
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\c100474a0f32297952e6fa002753a4f3\\workspace\\transformed\\react-android-0.86.0-release\\prefab\\modules\\reactnative\\libs\\android.x86_64\\libreactnative.so",
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\c100474a0f32297952e6fa002753a4f3\\workspace\\transformed\\react-android-0.86.0-release\\prefab\\modules\\jsi\\libs\\android.x86_64\\libjsi.so",
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\d6d633a9edf24ef67434af76f13f05f7\\workspace\\transformed\\fbjni-0.7.0\\prefab\\modules\\fbjni\\libs\\android.x86_64\\libfbjni.so"
+      ]
+    },
+    "react_codegen_AsyncStorageSpec::@15af80695a6281ecf900": {
+      "artifactName": "react_codegen_AsyncStorageSpec",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    },
+    "react_codegen_RNKC::@01e3c54a97c6e9d385b6": {
+      "artifactName": "react_codegen_RNKC",
+      "abi": "x86_64",
+      "output": "C:\\Users\\zains\\SocialView\\android\\app\\build\\intermediates\\cxx\\RelWithDebInfo\\4n503q6q\\obj\\x86_64\\libreact_codegen_RNKC.so",
+      "runtimeFiles": [
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\c100474a0f32297952e6fa002753a4f3\\workspace\\transformed\\react-android-0.86.0-release\\prefab\\modules\\reactnative\\libs\\android.x86_64\\libreactnative.so",
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\c100474a0f32297952e6fa002753a4f3\\workspace\\transformed\\react-android-0.86.0-release\\prefab\\modules\\jsi\\libs\\android.x86_64\\libjsi.so",
+        "C:\\Users\\zains\\.gradle\\caches\\9.3.1\\transforms\\d6d633a9edf24ef67434af76f13f05f7\\workspace\\transformed\\fbjni-0.7.0\\prefab\\modules\\fbjni\\libs\\android.x86_64\\libfbjni.so"
+      ]
+    },
+    "react_codegen_RNShareSpec::@e6c4c2b5aedb2ea213b7": {
+      "artifactName": "react_codegen_RNShareSpec",
+      "abi": "x86_64",
+      "runtimeFiles": []
+    }
+  }
+}
